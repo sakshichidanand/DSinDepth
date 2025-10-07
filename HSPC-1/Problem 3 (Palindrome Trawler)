@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+// Function to check if a substring str[i..j] is a palindrome
+bool isPalindrome(char str[], int start, int end) {
+    while (start < end) {
+        if (str[start] != str[end])
+            return false;
+        start++;
+        end--;
+    }
+    return true;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    for (int t = 0; t < n; t++) {
+        int len;
+        scanf("%d", &len);
+        char str[len + 1];
+        scanf("%s", str);
+
+        printf("%s\n", str);  // Echo the original string
+
+        // Check all substrings of length >= 3
+        for (int start = 0; start < len; start++) {
+            for (int l = 3; l <= len - start; l++) {  // length of substring
+                int end = start + l - 1;
+                if (isPalindrome(str, start, end)) {
+                    printf("%d %.*s\n", start + 1, l, str + start);  // 1-based index
+                }
+            }
+        }
+        printf("\n");  // Blank line after each string's output
+    }
+
+    return 0;
+}

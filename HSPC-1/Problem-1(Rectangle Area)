@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int n;
+    printf("Enter number of rectangles: ");
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        double x1, y1, x2, y2, x3, y3;
+        printf("Enter coordinates for rectangle %d (x1 y1 x2 y2 x3 y3): ", i + 1);
+        scanf("%lf %lf %lf %lf %lf %lf", &x1, &y1, &x2, &y2, &x3, &y3);
+        double area = 0.0;
+
+        // Dot products to find right angle
+        double dot1 = (x2 - x1)*(x3 - x1) + (y2 - y1)*(y3 - y1); // angle at P1
+        double dot2 = (x1 - x2)*(x3 - x2) + (y1 - y2)*(y3 - y2); // angle at P2
+        double dot3 = (x1 - x3)*(x2 - x3) + (y1 - y3)*(y2 - y3); // angle at P3
+
+        // Distances
+        double d12 = sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
+        double d23 = sqrt((x2 - x3)*(x2 - x3) + (y2 - y3)*(y2 - y3));
+        double d31 = sqrt((x3 - x1)*(x3 - x1) + (y3 - y1)*(y3 - y1));
+
+        // Identify right-angle vertex and calculate area
+        if (fabs(dot1) < 1e-6)
+            area = d12 * d31;
+        else if (fabs(dot2) < 1e-6)
+            area = d12 * d23;
+        else
+            area = d23 * d31;
+        printf("Area of rectangle with vertices (%.1f,%.1f),(%.1f,%.1f),(%.1f,%.1f) is %.1f\n",x1, y1, x2, y2, x3, y3, area);
+    }
+    return 0;
+}
